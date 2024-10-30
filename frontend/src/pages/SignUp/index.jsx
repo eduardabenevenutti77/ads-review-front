@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './styles.css'
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { createUser } from '../../api/user';
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -19,8 +20,9 @@ export default function SignUp() {
       e.preventDefault();
 
       // Devera criar usuario
-      if(true){
-        // se der certo redirecionar
+      const response = await createUser({nome, email, senha})
+      if(response.id){
+        // se houver um ID, ele redireciona para tela de login
         return navigate('/login')
       } else {
         return toast('Erro inesperado, tente novamente mais tarde!')

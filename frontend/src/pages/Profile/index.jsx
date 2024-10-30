@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import './styles.css'
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { deleteUser, getContext, updateUser } from '../../api/user';
 
 export default function Profile() {
   const [id, setId] = useState('');
@@ -14,7 +15,8 @@ export default function Profile() {
 
   async function carregarPerfil() {
     try {
-      const response = { id: 1, nome: 'teste', email: 'batata'}
+      const response =  await getContext()
+      // vai carregar as informações daquele usuário logado
     
       if(response.id) {
         setId(response.id)
@@ -29,8 +31,8 @@ export default function Profile() {
   const handleSaveUpdate = async () => {
     try {
       // deverá alterar o usuário
-  
-      if(true){
+      const response = await updateUser(id, {updNome, updEmail})
+      if(response.id){
         // se der certo redireciona
         setNome(updNome)
         setEmail(updEmail)
@@ -52,9 +54,8 @@ export default function Profile() {
       const response = prompt("Para confirmar exclusão digite seu email:")
 
       if(response === email) {      
-        // Devera deletar usuario
-        if(true){
-          // se der certo redireciona
+        const response = await deleteUser(id)
+        if(response){
           navigate('/')
         }
       } else {

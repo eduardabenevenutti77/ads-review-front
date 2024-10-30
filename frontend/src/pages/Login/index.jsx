@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './styles.css'
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { loginUser } from '../../api/user';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -21,12 +22,13 @@ export default function Login() {
     e.preventDefault();
 
     if (!email || !senha) {
-        return toast('Informe o e-mail e a senha para continuar!');
+      return toast('Informe o e-mail e a senha para continuar!');
     }
 
     try {
-        // Devera fazer a requisição de login
-        if (true) {
+        const response = await loginUser(email, senha)
+        if (response.token) {
+            localStorage.setItem('token', response.token) // salva o token no storage quando realiza o login
             // se der certo saltva o token no storage e redirecionar
             return navigate('/');
         }
