@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import './styles.css'
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { loginUser } from '../../api/user';
+import { AuthContext } from '../../context/Context';
 
 export default function Login() {
+  const { login } = useContext(AuthContext)
   const navigate = useNavigate();
 
   const handleBackClick = () => {
@@ -28,8 +30,9 @@ export default function Login() {
     try {
         const response = await loginUser(email, senha)
         if (response.token) {
-            localStorage.setItem('token', response.token) // salva o token no storage quando realiza o login
+            // para toda req para bsucar personagem, vai precisar do token
             // se der certo saltva o token no storage e redirecionar
+            login(response.token)
             return navigate('/');
         }
     } catch (error) {

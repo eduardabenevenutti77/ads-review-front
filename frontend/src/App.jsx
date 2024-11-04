@@ -9,19 +9,20 @@ import Profile from './pages/Profile';
 import Character from './pages/Character';
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import { AuthProvider } from './context/Context';
 
 function App() {
   return (
-     <>
+    <AuthProvider>
       <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/api" element={<RickAndMortyApi />} />
-          <Route path="/character" element={<Character />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-        </Routes>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/api" element={<RickAndMortyApi />} />
+        <Route path="/character" element={<Character />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+      </Routes>
       <ToastContainer
         position="bottom-center"
         autoClose={3500}
@@ -35,7 +36,7 @@ function App() {
         style={{ width: '50%' }}
       />
       <Footer />
-    </>
+    </AuthProvider>
   )
 }
 
