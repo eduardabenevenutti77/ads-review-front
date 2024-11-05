@@ -3,8 +3,11 @@ import reactLogo from '../../assets/react.svg'
 import { Link, useLocation } from 'react-router-dom';
 import './styles.css'
 import LogoutButton from '../Logout';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/Context';
 
 export default function Header(){
+    const { token } = useContext(AuthContext)
     const location = useLocation();
 
     const isLoginRoute = location.pathname === '/login';
@@ -16,7 +19,7 @@ export default function Header(){
                 <img src={reactLogo} alt='Logo do React' />
                 <img src={viteLogo} alt='Logo do Vite' />
                 {
-                    !isLoginRoute
+                    !isLoginRoute && !token
                         ? <Link to="/login">Entrar</Link>
                         : null
                 }
@@ -29,12 +32,12 @@ export default function Header(){
                         <Link to="/">
                             <li>Home</li>
                         </Link>
-                        <Link to="/api">
+                        { token && <Link to="/api">
                             <li>Rick And Morty API</li>
-                        </Link>
-                        <Link to="/profile">
+                        </Link>}
+                        { token && <Link to="/profile">
                             <li>Seu Perfil</li>
-                        </Link>
+                        </Link>}
                     </ul>
                 </nav>
             }
